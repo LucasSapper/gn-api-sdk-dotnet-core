@@ -9,6 +9,7 @@ using RestSharp;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using System.Collections.Generic;
+using RestSharp.Serializers.NewtonsoftJson;
 
 
 namespace Gerencianet.NETStardard.SDK {
@@ -192,7 +193,8 @@ namespace Gerencianet.NETStardard.SDK {
                 request.AddJsonBody(body);
 
             var client = new RestSharp.RestClient(baseURL + newEndpoint);
-            
+            client.UseNewtonsoftJson();
+
             if (certificate != null){
                 X509Certificate2 uidCert = new X509Certificate2(certificate, "");
                 client.ClientCertificates = new X509CertificateCollection() { uidCert };
