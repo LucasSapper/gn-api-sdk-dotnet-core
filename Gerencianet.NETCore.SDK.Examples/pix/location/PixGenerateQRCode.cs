@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Drawing;
+using Gerencianet.NETStardard.SDK;
 
 namespace Gerencianet.NETCore.SDK.Examples
 {

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Gerencianet.NETStardard.SDK;
 using Newtonsoft.Json.Linq;
 
 namespace Gerencianet.NETCore.SDK.Examples
