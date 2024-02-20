@@ -23,6 +23,7 @@ namespace Gerencianet.NETStardard.SDK {
         private static bool sandbox;
         private static string certificate;
         private string baseURL;
+        private static string partnerToken;
 
 
         public Endpoints (JObject options) {
@@ -34,9 +35,10 @@ namespace Gerencianet.NETStardard.SDK {
             urls = (JObject) constants["URLS"];
             Sandbox = (bool) options["sandbox"];
             Certificate = (string) options["pix_cert"];
+            PartnerToken = (string)options["partner_token"];
         }
 
-        public Endpoints (string clientId, string clientSecret, bool sandbox, string certificate) {
+        public Endpoints (string clientId, string clientSecret, bool sandbox, string certificate, string partnerToken) {
             ClientId = clientId;
             ClientSecret = clientSecret;
             Constants constant = new Constants();
@@ -45,6 +47,7 @@ namespace Gerencianet.NETStardard.SDK {
             urls = (JObject) constants["URLS"];
             Sandbox = sandbox;
             Certificate = certificate ;
+            PartnerToken = partnerToken;
         }
 
         public override bool TryInvokeMember (InvokeMemberBinder binder, object[] args, out object result) {
@@ -135,12 +138,17 @@ namespace Gerencianet.NETStardard.SDK {
             request.AddHeader ("Authorization", string.Format ("Bearer {0}", Token));
             request.AddHeader ("api-sdk", string.Format ("dotnet-core-{0}", version));
 
+            if (partnerToken != null)
+            {
+                request.AddHeader("partner-token", partnerToken);
+            }
+
             if (headersComplement != null) {
                 
                 var header = JObject.Parse(headersComplement);
                 if(header["x-skip-mtls-checking"] != null)
                     request.AddHeader ("x-skip-mtls-checking", (string) header["x-skip-mtls-checking"]);
-            }
+            }            
 
             try {
                 return SendRequest (request, body, newEndpoint);
@@ -210,5 +218,6 @@ namespace Gerencianet.NETStardard.SDK {
         public static bool Sandbox { get => sandbox; set => sandbox = value; }
         public static string Certificate { get => certificate; set => certificate = value; }
         public static string Token { get => token; set => token = value; }
+        private static string PartnerToken { get => partnerToken; set => partnerToken = value; }
     }
 }
