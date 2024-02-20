@@ -14,7 +14,7 @@ using RestSharp.Serializers.NewtonsoftJson;
 
 namespace Gerencianet.NETStardard.SDK {
     public class Endpoints : DynamicObject {
-        private const string version = "2.0.2";
+        private const string version = "2.0.3";
         private static string clientId;
         private static string clientSecret;
         private static JObject endpoints;
